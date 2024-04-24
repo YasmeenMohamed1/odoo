@@ -1,0 +1,81 @@
+<odoo>
+	<data>
+		<record id="patient_action" model="ir.actions.act_window">
+			<field name="name">
+				Patients
+			</field>
+			<field name="res_model">hms.patient</field>
+			<field name="view_mode">tree,form,kanban</field>
+		</record>
+		<record id="patient_tree_view" model="ir.ui.view">
+			<field name="name">
+				Patients Tree View
+			</field>
+			<field name="model">hms.patient</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="first_name" />
+					<field name="last_name" />
+					<field name="age" />
+				</tree>
+			</field>
+		</record>
+		<record id="patient_form_view" model="ir.ui.view">
+			<field name="name">Patients Form View</field>
+			<field name="model">hms.patient</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+						<field name="state" widget="statusbar" nolabel="1" options="{'clickable':'1'}" />
+						<button name="change_state" type="object" string="Change_State" />
+					</header>
+					<sheet>
+						<group>
+							<group string="Personal Information" name="Personal_Information">
+								<field name="first_name" />
+								<field name="last_name" />
+								<field name="email" />
+								<field name="age" />
+								<field name="birth_date" />
+								<field name="address" />
+								<field name="image" />
+							</group>
+							<group string="Medical Information">
+								<field name="blood_type" />
+								<field name="pcr" />
+								<field name="cr_ratio" attrs="{'required': [('pcr', '=', True)]}" />
+								<field name="history" attrs="{'invisible' : [('age','&lt;',50)]}" />
+							</group>
+						</group>
+						<notebook>
+							<page string="Department Information">
+								<group>
+									<field name="department_id" domain="[('is_opened' ,'=' , True )]" />
+									<field name="department_capacity" />
+								</group>
+							</page>
+							<page string="Doctor Information">
+								<group>
+									<field name="doctor_ids" attrs="{'readonly': [('department_id', '=', False)]}" groups="hms.managers_group"/>
+								</group>
+							</page>
+							<page string="State Logs">
+								<group>
+									<field name="state_logs">
+										<tree>
+											<field name="create_uid" />
+											<field name="create_date" />
+											<field name="description" />
+										</tree>
+									</field>
+								</group>
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<menuitem id="patient_menu" name="HMS" />
+		<menuitem id="patients_menu" name="Patients" parent="patient_menu" action="patient_action" />
+	</data>
+</odoo>
