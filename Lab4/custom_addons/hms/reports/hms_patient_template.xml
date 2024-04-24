@@ -50,8 +50,8 @@
                                         <span t-field="o.doctor_ids"/>
                                     </td>
                                     <td class=" mr-2 text-center">
-                                        cr_ratio:
-                                        <span t-field="o.cr_ratio"/>
+                                         Email:
+                                        <span t-field="o.email"/>
                                     </td>
                                 </tr>
 
